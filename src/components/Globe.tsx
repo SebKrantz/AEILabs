@@ -2,53 +2,44 @@ import { useRef, useMemo, useCallback } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import { CONTINENT_PATHS } from "@/data/continents";
+
+const PRIMARY_BLUE = "#2666CC";
+const ACCENT_AMBER = "#C8912E";
 
 // Trade route arc data: [lat1, lon1, lat2, lon2]
 const TRADE_ROUTES: [number, number, number, number][] = [
-  [40.7, -74, 51.5, -0.1],    // NYC -> London
-  [51.5, -0.1, 31.2, 121.5],  // London -> Shanghai
-  [31.2, 121.5, 1.3, 103.8],  // Shanghai -> Singapore
-  [1.3, 103.8, -33.9, 18.4],  // Singapore -> Cape Town
-  [34.1, -118.2, 35.7, 139.7],// LA -> Tokyo
-  [35.7, 139.7, 22.3, 114.2], // Tokyo -> Hong Kong
-  [-23.5, -46.6, 6.5, 3.4],   // Sao Paulo -> Lagos
-  [6.5, 3.4, 25, 55],         // Lagos -> Dubai
-  [25, 55, 19, 73],           // Dubai -> Mumbai
-  [19, 73, 31.2, 121.5],      // Mumbai -> Shanghai
-  [55.8, 37.6, 39.9, 116.4],  // Moscow -> Beijing
-  [48.9, 2.3, 40.4, -3.7],    // Paris -> Madrid
-  [-33.9, 151.2, 35.7, 139.7],// Sydney -> Tokyo
-  [37.6, 127, 35.7, 139.7],   // Seoul -> Tokyo
-  [52.5, 13.4, 55.8, 37.6],   // Berlin -> Moscow
-  [41.9, 12.5, 30, 31.2],     // Rome -> Cairo
-  [30, 31.2, 25, 55],         // Cairo -> Dubai
-  [-1.3, 36.8, 25, 55],       // Nairobi -> Dubai
-  [13.8, 100.5, 1.3, 103.8],  // Bangkok -> Singapore
-  [49.3, -123.1, 37.6, 127],  // Vancouver -> Seoul
+  [40.7, -74, 51.5, -0.1],
+  [51.5, -0.1, 31.2, 121.5],
+  [31.2, 121.5, 1.3, 103.8],
+  [1.3, 103.8, -33.9, 18.4],
+  [34.1, -118.2, 35.7, 139.7],
+  [35.7, 139.7, 22.3, 114.2],
+  [-23.5, -46.6, 6.5, 3.4],
+  [6.5, 3.4, 25, 55],
+  [25, 55, 19, 73],
+  [19, 73, 31.2, 121.5],
+  [55.8, 37.6, 39.9, 116.4],
+  [48.9, 2.3, 40.4, -3.7],
+  [-33.9, 151.2, 35.7, 139.7],
+  [37.6, 127, 35.7, 139.7],
+  [52.5, 13.4, 55.8, 37.6],
+  [41.9, 12.5, 30, 31.2],
+  [30, 31.2, 25, 55],
+  [-1.3, 36.8, 25, 55],
+  [13.8, 100.5, 1.3, 103.8],
+  [49.3, -123.1, 37.6, 127],
 ];
 
 // Major economic nodes: [lat, lon, importance]
 const ECONOMIC_NODES: [number, number, number][] = [
-  [40.7, -74, 1],     // NYC
-  [51.5, -0.1, 0.9],  // London
-  [31.2, 121.5, 1],   // Shanghai
-  [35.7, 139.7, 0.85],// Tokyo
-  [1.3, 103.8, 0.8],  // Singapore
-  [25, 55, 0.7],      // Dubai
-  [22.3, 114.2, 0.85],// Hong Kong
-  [19, 73, 0.75],     // Mumbai
-  [-23.5, -46.6, 0.65],// Sao Paulo
-  [34.1, -118.2, 0.8],// LA
-  [48.9, 2.3, 0.7],   // Paris
-  [55.8, 37.6, 0.6],  // Moscow
-  [39.9, 116.4, 0.9], // Beijing
-  [37.6, 127, 0.75],  // Seoul
-  [-33.9, 151.2, 0.6],// Sydney
-  [6.5, 3.4, 0.5],    // Lagos
-  [-33.9, 18.4, 0.45],// Cape Town
-  [30, 31.2, 0.5],    // Cairo
-  [52.5, 13.4, 0.65], // Berlin
-  [41.9, 12.5, 0.55], // Rome
+  [40.7, -74, 1], [51.5, -0.1, 0.9], [31.2, 121.5, 1],
+  [35.7, 139.7, 0.85], [1.3, 103.8, 0.8], [25, 55, 0.7],
+  [22.3, 114.2, 0.85], [19, 73, 0.75], [-23.5, -46.6, 0.65],
+  [34.1, -118.2, 0.8], [48.9, 2.3, 0.7], [55.8, 37.6, 0.6],
+  [39.9, 116.4, 0.9], [37.6, 127, 0.75], [-33.9, 151.2, 0.6],
+  [6.5, 3.4, 0.5], [-33.9, 18.4, 0.45], [30, 31.2, 0.5],
+  [52.5, 13.4, 0.65], [41.9, 12.5, 0.55],
 ];
 
 function latLonToVec3(lat: number, lon: number, radius: number): THREE.Vector3 {
@@ -74,23 +65,46 @@ function createArcPoints(start: THREE.Vector3, end: THREE.Vector3, segments: num
   return points;
 }
 
+function ContinentOutlines() {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+    }
+  });
+
+  const lineGeometries = useMemo(() => {
+    return CONTINENT_PATHS.map((path) => {
+      const points = path.map(([lat, lon]) => latLonToVec3(lat, lon, 2.008));
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      return geometry;
+    });
+  }, []);
+
+  return (
+    <group ref={groupRef}>
+      {lineGeometries.map((geom, i) => (
+        <line key={i} geometry={geom}>
+          <lineBasicMaterial color={PRIMARY_BLUE} transparent opacity={0.25} />
+        </line>
+      ))}
+    </group>
+  );
+}
+
 function GlobeCore() {
-  const globeRef = useRef<THREE.Mesh>(null);
-  const atmosphereRef = useRef<THREE.Mesh>(null);
+  const globeRef = useRef<THREE.Group>(null);
 
   useFrame(({ clock }) => {
     if (globeRef.current) {
       globeRef.current.rotation.y = clock.getElapsedTime() * 0.05;
     }
-    if (atmosphereRef.current) {
-      atmosphereRef.current.rotation.y = clock.getElapsedTime() * 0.05;
-    }
   });
 
   return (
-    <group>
-      {/* Globe sphere */}
-      <mesh ref={globeRef}>
+    <group ref={globeRef}>
+      <mesh>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial
           color="#0a1628"
@@ -99,16 +113,16 @@ function GlobeCore() {
           transparent
           opacity={0.95}
         />
-        {/* Wireframe overlay for "grid" feel */}
-        <mesh>
-          <sphereGeometry args={[2.005, 36, 36]} />
-          <meshBasicMaterial color="#00d4ff" wireframe transparent opacity={0.06} />
-        </mesh>
+      </mesh>
+      {/* Subtle wireframe grid */}
+      <mesh>
+        <sphereGeometry args={[2.003, 24, 24]} />
+        <meshBasicMaterial color={PRIMARY_BLUE} wireframe transparent opacity={0.03} />
       </mesh>
       {/* Atmosphere glow */}
-      <mesh ref={atmosphereRef}>
+      <mesh>
         <sphereGeometry args={[2.15, 64, 64]} />
-        <meshBasicMaterial color="#00d4ff" transparent opacity={0.04} side={THREE.BackSide} />
+        <meshBasicMaterial color={PRIMARY_BLUE} transparent opacity={0.03} side={THREE.BackSide} />
       </mesh>
     </group>
   );
@@ -137,7 +151,7 @@ function TradeArcs() {
     <group ref={arcsRef}>
       {arcGeometries.map((geom, i) => (
         <mesh key={i} geometry={geom}>
-          <meshBasicMaterial color="#00d4ff" transparent opacity={0.35} />
+          <meshBasicMaterial color={PRIMARY_BLUE} transparent opacity={0.4} />
         </mesh>
       ))}
     </group>
@@ -148,43 +162,46 @@ function FlowingParticles() {
   const particlesRef = useRef<THREE.Points>(null);
   const groupRef = useRef<THREE.Group>(null);
 
-  const { positions, velocities, count } = useMemo(() => {
+  const { geometry, velocities, count } = useMemo(() => {
     const count = 400;
     const positions = new Float32Array(count * 3);
     const velocities: number[] = [];
-    
+
     for (let i = 0; i < count; i++) {
       const routeIdx = Math.floor(Math.random() * TRADE_ROUTES.length);
       const [lat1, lon1, lat2, lon2] = TRADE_ROUTES[routeIdx];
       const t = Math.random();
       const start = latLonToVec3(lat1, lon1, 2.01);
       const end = latLonToVec3(lat2, lon2, 2.01);
-      const points = createArcPoints(start, end, 10, 0.3);
-      const idx = Math.floor(t * (points.length - 1));
-      const point = points[idx];
+      const arcPts = createArcPoints(start, end, 10, 0.3);
+      const idx = Math.floor(t * (arcPts.length - 1));
+      const point = arcPts[idx];
       positions[i * 3] = point.x;
       positions[i * 3 + 1] = point.y;
       positions[i * 3 + 2] = point.z;
       velocities.push(0.3 + Math.random() * 0.7);
     }
-    return { positions, velocities, count };
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    return { geometry, velocities, count };
   }, []);
 
   const handleFrame = useCallback(({ clock }: { clock: THREE.Clock }) => {
     if (!particlesRef.current) return;
     const posArray = particlesRef.current.geometry.attributes.position.array as Float32Array;
     const time = clock.getElapsedTime();
-    
+
     for (let i = 0; i < count; i++) {
       const routeIdx = i % TRADE_ROUTES.length;
       const [lat1, lon1, lat2, lon2] = TRADE_ROUTES[routeIdx];
       const start = latLonToVec3(lat1, lon1, 2.01);
       const end = latLonToVec3(lat2, lon2, 2.01);
       const t = ((time * velocities[i] * 0.15) + (i / count)) % 1;
-      const points = createArcPoints(start, end, 10, 0.3);
-      const segIdx = Math.min(Math.floor(t * (points.length - 1)), points.length - 2);
-      const segT = (t * (points.length - 1)) - segIdx;
-      const point = new THREE.Vector3().lerpVectors(points[segIdx], points[segIdx + 1], segT);
+      const arcPts = createArcPoints(start, end, 10, 0.3);
+      const segIdx = Math.min(Math.floor(t * (arcPts.length - 1)), arcPts.length - 2);
+      const segT = (t * (arcPts.length - 1)) - segIdx;
+      const point = new THREE.Vector3().lerpVectors(arcPts[segIdx], arcPts[segIdx + 1], segT);
       posArray[i * 3] = point.x;
       posArray[i * 3 + 1] = point.y;
       posArray[i * 3 + 2] = point.z;
@@ -199,15 +216,8 @@ function FlowingParticles() {
 
   return (
     <group ref={groupRef}>
-      <points ref={particlesRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[positions, 3]}
-            count={count}
-          />
-        </bufferGeometry>
-        <pointsMaterial color="#00d4ff" size={0.025} transparent opacity={0.8} sizeAttenuation />
+      <points ref={particlesRef} geometry={geometry}>
+        <pointsMaterial color={PRIMARY_BLUE} size={0.025} transparent opacity={0.7} sizeAttenuation />
       </points>
     </group>
   );
@@ -234,7 +244,7 @@ function EconomicNodes() {
       {nodes.map((node, i) => (
         <mesh key={i} position={node.position}>
           <sphereGeometry args={[0.02 * node.scale, 8, 8]} />
-          <meshBasicMaterial color="#ffb800" transparent opacity={0.8} />
+          <meshBasicMaterial color={ACCENT_AMBER} transparent opacity={0.75} />
         </mesh>
       ))}
     </group>
@@ -242,39 +252,39 @@ function EconomicNodes() {
 }
 
 function Stars() {
-  const starPositions = useMemo(() => {
+  const geometry = useMemo(() => {
     const positions = new Float32Array(2000 * 3);
     for (let i = 0; i < 2000; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 50;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
     }
-    return positions;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    return geo;
   }, []);
 
   return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[starPositions, 3]} count={2000} />
-      </bufferGeometry>
-      <pointsMaterial color="#ffffff" size={0.05} transparent opacity={0.6} sizeAttenuation />
+    <points geometry={geometry}>
+      <pointsMaterial color="#ffffff" size={0.05} transparent opacity={0.5} sizeAttenuation />
     </points>
   );
 }
 
 export default function Globe() {
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 w-full h-full">
       <Canvas
         camera={{ position: [0, 1.5, 5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
-        style={{ background: 'transparent' }}
+        style={{ background: "transparent" }}
       >
         <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 3, 5]} intensity={0.8} color="#e0f0ff" />
-        <pointLight position={[-5, -3, -5]} intensity={0.3} color="#00d4ff" />
+        <directionalLight position={[5, 3, 5]} intensity={0.8} color="#d0e0f0" />
+        <pointLight position={[-5, -3, -5]} intensity={0.3} color={PRIMARY_BLUE} />
         <Stars />
         <GlobeCore />
+        <ContinentOutlines />
         <TradeArcs />
         <FlowingParticles />
         <EconomicNodes />

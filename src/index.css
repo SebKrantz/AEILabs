@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,46 +7,46 @@
 @layer base {
   :root {
     --background: 228 50% 6%;
-    --foreground: 210 40% 92%;
+    --foreground: 210 20% 92%;
 
     --card: 228 40% 10%;
-    --card-foreground: 210 40% 92%;
+    --card-foreground: 210 20% 92%;
 
     --popover: 228 40% 10%;
-    --popover-foreground: 210 40% 92%;
+    --popover-foreground: 210 20% 92%;
 
-    --primary: 190 100% 50%;
-    --primary-foreground: 228 50% 6%;
+    --primary: 220 70% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 42 100% 49%;
+    --secondary: 38 70% 55%;
     --secondary-foreground: 228 50% 6%;
 
     --muted: 228 30% 15%;
-    --muted-foreground: 215 20% 55%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 190 80% 40%;
-    --accent-foreground: 210 40% 95%;
+    --accent: 220 60% 40%;
+    --accent-foreground: 210 20% 95%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 228 20% 18%;
     --input: 228 20% 18%;
-    --ring: 190 100% 50%;
+    --ring: 220 70% 50%;
 
     --radius: 0.5rem;
 
-    --glow-primary: 190 100% 50%;
-    --glow-secondary: 42 100% 49%;
+    --glow-primary: 220 70% 50%;
+    --glow-secondary: 38 70% 55%;
 
     --sidebar-background: 228 40% 8%;
-    --sidebar-foreground: 210 40% 92%;
-    --sidebar-primary: 190 100% 50%;
-    --sidebar-primary-foreground: 228 50% 6%;
+    --sidebar-foreground: 210 20% 92%;
+    --sidebar-primary: 220 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 228 30% 15%;
-    --sidebar-accent-foreground: 210 40% 92%;
+    --sidebar-accent-foreground: 210 20% 92%;
     --sidebar-border: 228 20% 18%;
-    --sidebar-ring: 190 100% 50%;
+    --sidebar-ring: 220 70% 50%;
   }
 }
 
@@ -58,18 +58,18 @@
     @apply bg-background text-foreground font-body antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display;
+    @apply font-display font-semibold;
   }
 }
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 20px hsl(var(--glow-primary) / 0.4), 0 0 60px hsl(var(--glow-primary) / 0.15);
+    text-shadow: 0 0 20px hsl(var(--glow-primary) / 0.3), 0 0 60px hsl(var(--glow-primary) / 0.1);
   }
   .text-glow-gold {
-    text-shadow: 0 0 20px hsl(var(--glow-secondary) / 0.4), 0 0 60px hsl(var(--glow-secondary) / 0.15);
+    text-shadow: 0 0 20px hsl(var(--glow-secondary) / 0.3), 0 0 60px hsl(var(--glow-secondary) / 0.1);
   }
   .border-glow {
-    box-shadow: 0 0 15px hsl(var(--glow-primary) / 0.15), inset 0 0 15px hsl(var(--glow-primary) / 0.05);
+    box-shadow: 0 0 15px hsl(var(--glow-primary) / 0.1), inset 0 0 15px hsl(var(--glow-primary) / 0.03);
   }
 }
