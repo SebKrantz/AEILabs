@@ -75,11 +75,19 @@ function ContinentOutlines() {
   });
 
   const lines = useMemo(() => {
-    const material = new THREE.LineBasicMaterial({ color: PRIMARY_BLUE, transparent: true, opacity: 0.25 });
     return CONTINENT_PATHS.map((path) => {
-      const points = path.map(([lat, lon]) => latLonToVec3(lat, lon, 2.008));
+      const points = path.map(([lat, lon]) => latLonToVec3(lat, lon, 2.015));
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      return new THREE.Line(geometry, material);
+      const material = new THREE.LineBasicMaterial({
+        color: new THREE.Color(PRIMARY_BLUE),
+        transparent: true,
+        opacity: 0.4,
+        depthTest: true,
+        depthWrite: false,
+      });
+      const line = new THREE.Line(geometry, material);
+      line.renderOrder = 1;
+      return line;
     });
   }, []);
 
