@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { CONTINENT_PATHS } from "@/data/continents";
 
-const PRIMARY_BLUE = "#2666CC";
+const PRIMARY_BLUE = "#1d7ab8";
 const ACCENT_AMBER = "#C8912E";
 
 // Trade route arc data: [lat1, lon1, lat2, lon2]
@@ -81,7 +81,7 @@ function ContinentOutlines() {
       const material = new THREE.LineBasicMaterial({
         color: new THREE.Color(PRIMARY_BLUE),
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.7,
         depthTest: true,
         depthWrite: false,
       });

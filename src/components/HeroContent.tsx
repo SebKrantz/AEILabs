@@ -18,11 +18,11 @@ export default function HeroContent() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.7 }}
-          className="font-display font-bold text-5xl md:text-7xl leading-tight mb-6 text-glow"
+          className="font-display font-light text-5xl md:text-7xl leading-tight mb-6 text-glow"
         >
-          <span className="text-foreground">Understand How</span>
+          <span className="text-foreground">Reenvision How</span>
           <br />
-          <span className="text-primary">Economies Connect</span>
+          <span className="text-primary">Places Connect</span>
         </motion.h1>
 
         <motion.p
