@@ -74,20 +74,19 @@ function ContinentOutlines() {
     }
   });
 
-  const lineGeometries = useMemo(() => {
+  const lines = useMemo(() => {
+    const material = new THREE.LineBasicMaterial({ color: PRIMARY_BLUE, transparent: true, opacity: 0.25 });
     return CONTINENT_PATHS.map((path) => {
       const points = path.map(([lat, lon]) => latLonToVec3(lat, lon, 2.008));
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      return geometry;
+      return new THREE.Line(geometry, material);
     });
   }, []);
 
   return (
     <group ref={groupRef}>
-      {lineGeometries.map((geom, i) => (
-        <line key={i} geometry={geom}>
-          <lineBasicMaterial color={PRIMARY_BLUE} transparent opacity={0.25} />
-        </line>
+      {lines.map((line, i) => (
+        <primitive key={i} object={line} />
       ))}
     </group>
   );
