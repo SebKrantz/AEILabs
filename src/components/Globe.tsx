@@ -81,7 +81,7 @@ function ContinentOutlines() {
       const material = new THREE.LineBasicMaterial({
         color: new THREE.Color(PRIMARY_BLUE),
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.7,
         depthTest: true,
         depthWrite: false,
       });
