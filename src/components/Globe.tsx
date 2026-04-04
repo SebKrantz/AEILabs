@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { CONTINENT_PATHS } from "@/data/continents";
 
-const PRIMARY_BLUE = "#1d7ab8";
+const PRIMARY_BLUE = "#4A7FD4";
 const ACCENT_AMBER = "#C8912E";
 
 // Trade route arc data: [lat1, lon1, lat2, lon2]
