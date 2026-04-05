@@ -270,7 +270,7 @@ function PortMarkers({ features }: { features: PortFeature[] }) {
 
     features.forEach((f, i) => {
       const [lon, lat] = f.geometry.coordinates;
-      dummy.position.copy(latLonToVec3(lat, lon, 2.022));
+      dummy.position.copy(latLonToVec3(lat, lon, 2.003));
       dummy.updateMatrix();
       iMesh.setMatrixAt(i, dummy.matrix);
     });
@@ -300,7 +300,7 @@ function CityMarkers({ features }: { features: CityFeature[] }) {
     features.forEach((f, i) => {
       const [lon, lat] = f.geometry.coordinates;
       const scale = 0.004 + (f.properties.rank_max / 20) * 0.006;
-      dummy.position.copy(latLonToVec3(lat, lon, 2.026));
+      dummy.position.copy(latLonToVec3(lat, lon, 2.004));
       dummy.scale.setScalar(scale);
       dummy.updateMatrix();
       iMesh.setMatrixAt(i, dummy.matrix);
