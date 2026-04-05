@@ -31,9 +31,8 @@ export default function HeroContent() {
           transition={{ duration: 1, delay: 0.9 }}
           className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 font-body leading-relaxed"
         >
-          Economic intelligence linking global trade
-          and transport models to national macroeconomic CGE, quantitative regional models, and local AI population embeddings —
-          trace shocks from global to local, plan infrastructure at any scale, simulate economic policies, and reenvision your World — using simple chat or expert interfaces to our platform.
+          Economic Intelligence linking global trade and transport network models to national CGE and quantitative regional models, extended by local population embeddings
+           — trace shocks from global to local, plan infrastructure at any scale, simulate economic policies, and reenvision your World — using simple chat or expert interfaces.
         </motion.p>
 
         <motion.div
