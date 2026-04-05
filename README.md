@@ -3,7 +3,7 @@
 An interactive 3D globe visualization built with React and Three.js, featuring realistic continent outlines rendered from Natural Earth GeoJSON data. The hero landing page invites users to *"Reenvision How Places Connect."*
 
 ![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Vite](https://img.shields.io/badge/Vite-5-purple) ![Three.js](https://img.shields.io/badge/Three.js-r160-black)
-
+ 
 ## Tech Stack
 
 | Layer | Technology |
