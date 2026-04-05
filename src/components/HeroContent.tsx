@@ -20,9 +20,9 @@ export default function HeroContent() {
           transition={{ duration: 1, delay: 0.7 }}
           className="font-display font-light text-5xl md:text-7xl leading-tight mb-6 text-glow"
         >
-          <span className="text-foreground">Reenvisioning Global</span>
+          <span className="text-foreground">Reenvisioning the</span>
           <br />
-          <span className="text-primary">Economic Geography</span>
+          <span className="text-primary">Global Economy</span>
         </motion.h1>
 
         <motion.p
@@ -32,7 +32,7 @@ export default function HeroContent() {
           className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 font-body leading-relaxed"
         >
           Economic Intelligence linking global trade and transport network models to national CGE and quantitative regional models, extended by local population embeddings
-           — trace shocks from global to local, plan infrastructure at any scale, simulate economic policies, and reenvision your World — using simple chat or expert interfaces.
+           — trace shocks from global to local, plan infrastructure at any scale, simulate the impact of economic policies, and reenvision the World — using simple chat or expert interfaces.
         </motion.p>
 
         <motion.div
