@@ -17,6 +17,10 @@ function isUpToDate(outFile, ...srcFiles) {
   });
 }
 
+function sourceExists(...srcFiles) {
+  return srcFiles.every(f => existsSync(f));
+}
+
 async function readShapefile(shpPath, propertyFilter, featureFilter = () => true) {
   const source = await openShp(shpPath);
   const features = [];
@@ -37,6 +41,10 @@ async function readShapefile(shpPath, propertyFilter, featureFilter = () => true
 async function convertCountries() {
   const shpPath = `${MAP_DIR}/ne_50m_admin_0_countries/ne_50m_admin_0_countries.shp`;
   const outPath = `${OUT_DIR}/countries.geojson`;
+  if (!sourceExists(shpPath)) {
+    console.log('  countries.geojson — source not found, skipping');
+    return;
+  }
   if (isUpToDate(outPath, shpPath)) {
     console.log('  countries.geojson — up to date, skipping');
     return;
@@ -52,6 +60,10 @@ async function convertCountries() {
 async function convertPorts() {
   const shpPath = `${MAP_DIR}/ne_10m_ports/ne_10m_ports.shp`;
   const outPath = `${OUT_DIR}/ports.geojson`;
+  if (!sourceExists(shpPath)) {
+    console.log('  ports.geojson — source not found, skipping');
+    return;
+  }
   if (isUpToDate(outPath, shpPath)) {
     console.log('  ports.geojson — up to date, skipping');
     return;
@@ -68,6 +80,10 @@ async function convertPorts() {
 async function convertCities() {
   const shpPath = `${MAP_DIR}/ne_50m_populated_places_simple/ne_50m_populated_places_simple.shp`;
   const outPath = `${OUT_DIR}/cities.geojson`;
+  if (!sourceExists(shpPath)) {
+    console.log('  cities.geojson — source not found, skipping');
+    return;
+  }
   if (isUpToDate(outPath, shpPath)) {
     console.log('  cities.geojson — up to date, skipping');
     return;
