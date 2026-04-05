@@ -115,14 +115,14 @@ function LandSphere({ texture }: { texture: THREE.CanvasTexture }) {
 
 function AtmosphereGlow() {
   const layers = useMemo(() => {
-    const count = 32;
-    const minR = 2.01;
-    const maxR = 2.55;
-    const peakOpacity = 0.08;
+    const count = 80;
+    const minR = 2.06;
+    const maxR = 2.65;
+    const peakOpacity = 0.032;
     return Array.from({ length: count }, (_, i) => {
       const t = i / (count - 1);
       const r = minR + (maxR - minR) * t;
-      const opacity = peakOpacity * Math.exp(-8 * t);
+      const opacity = peakOpacity * Math.exp(-6 * t);
       return { r, opacity };
     });
   }, []);
