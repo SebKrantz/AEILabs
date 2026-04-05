@@ -15,11 +15,12 @@ interface GeoData {
 }
 
 async function fetchGeoData(): Promise<GeoData> {
+  const base = import.meta.env.BASE_URL;
   const [countries, ports, cities, routes] = await Promise.all([
-    fetch('/geodata/countries.geojson').then(r => r.json()),
-    fetch('/geodata/ports.geojson').then(r => r.json()),
-    fetch('/geodata/cities.geojson').then(r => r.json()),
-    fetch('/geodata/maritime-routes.geojson').then(r => r.json()),
+    fetch(`${base}geodata/countries.geojson`).then(r => r.json()),
+    fetch(`${base}geodata/ports.geojson`).then(r => r.json()),
+    fetch(`${base}geodata/cities.geojson`).then(r => r.json()),
+    fetch(`${base}geodata/maritime-routes.geojson`).then(r => r.json()),
   ]);
   return { countries, ports, cities, routes };
 }
