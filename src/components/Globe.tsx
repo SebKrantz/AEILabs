@@ -429,7 +429,7 @@ function FallbackGlobe() {
 
   useFrame(({ clock }) => {
     if (groupRef.current)
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.05 - 2.97;
   });
 
   const lines = useMemo(() => {
@@ -484,7 +484,7 @@ function GlobeScene({ countries, ports, cities, routes }: GlobeSceneProps) {
 
   useFrame(({ clock }) => {
     if (groupRef.current)
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.05 - 2.97;
   });
 
   const landTexture = useMemo(
@@ -520,7 +520,7 @@ export default function Globe() {
   return (
     <div className="absolute inset-0 w-full h-full">
       <Canvas
-        camera={{ position: [0, 1.5, 5], fov: 45 }}
+        camera={{ position: [0, 2.4, 4.6], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
