@@ -540,6 +540,7 @@ export default function Globe() {
           enableZoom={false}
           enablePan={false}
           autoRotate={false}
+          target={[0, 0.1, 0]}
           minPolarAngle={Math.PI * 0.3}
           maxPolarAngle={Math.PI * 0.7}
         />
