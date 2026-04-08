@@ -93,7 +93,7 @@ const NODES: NodeDef[] = [
   },
   {
     id: "aether", svgX: 500, svgY: 720,
-    category: "Hyper-local Extrapolation",
+    category: "Super-Resolution",
     line1: "AlphaEarth Vector Embeddings",
     line2: "(10m Resolution, POI-Enriched)",
     detail: "AETHER (AlphaEarth-POI Enriched Representation Learning for Human-Centered Urban Analysis): 10m-resolution vector embeddings encoding the built environment, demographics, and economic activity for hyper-local welfare extrapolation.",
