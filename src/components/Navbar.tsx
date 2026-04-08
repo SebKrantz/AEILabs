@@ -1,10 +1,14 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 
-const NAV_ITEMS = ["Solutions", "Technology", "Company"];
+const NAV_ITEMS: { label: string; path: string }[] = [
+  { label: "Solutions", path: "/solutions" },
+  { label: "Technology", path: "/technology" },
+  { label: "Company", path: "/company" },
+];
 
 export default function Navbar() {
-  const [active, setActive] = useState<string | null>(null);
+  const location = useLocation();
 
   return (
     <motion.nav
@@ -16,7 +20,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <Link to="/" className="flex items-center gap-2 flex-shrink-0">
           <div className="w-10 h-10 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center">
             <span className="text-primary font-display font-bold text-2xl">Æ</span>
           </div>
@@ -28,30 +32,33 @@ export default function Navbar() {
             </div>
             <span className="text-3xl font-display font-light text-foreground">Labs</span>
           </div>
-        </div>
+        </Link>
 
         {/* Centered tabs */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1">
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item}
-              onClick={() => setActive(item)}
-              className={`relative px-5 py-2 text-sm font-body transition-colors duration-200 rounded-md ${
-                active === item
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {item}
-              {active === item && (
-                <motion.div
-                  layoutId="nav-indicator"
-                  className="absolute bottom-0 left-2 right-2 h-px bg-primary"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const isActive = location.pathname.startsWith(item.path);
+            return (
+              <Link
+                key={item.label}
+                to={item.path}
+                className={`relative px-5 py-2 text-sm font-body transition-colors duration-200 rounded-md ${
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {item.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute bottom-0 left-2 right-2 h-px bg-primary"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         {/* CTA */}
