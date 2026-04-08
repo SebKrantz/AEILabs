@@ -293,7 +293,7 @@ function NodeBox({ node, isActive, onClick }: { node: NodeDef; isActive: boolean
       {/* box — rx=0 → sharp corners */}
       <rect
         x={cx - HW} y={cy - HH} width={HW * 2} height={HH * 2} rx={0}
-        fill={isActive ? "rgba(74,127,212,0.10)" : "rgba(3,8,20,0.96)"}
+        fill={isActive ? "rgba(74,127,212,0.10)" : "rgba(3,8,20,0.7)"}
         stroke={isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.65)"}
         strokeWidth={isActive ? 1.5 : 1}
       />
@@ -403,7 +403,7 @@ export default function TechFlowchart() {
         <defs>
           {/* Subtle dark drop-shadow for arrow labels — improves legibility over imagery */}
           <filter id="lbl-shadow" x="-20%" y="-40%" width="140%" height="180%">
-            <feDropShadow dx="0" dy="0" stdDeviation="2.5" floodColor="rgba(0,0,0,0.85)" />
+            <feDropShadow dx="0" dy="0" stdDeviation="3.2" floodColor="rgba(0,0,0,0.90)" />
           </filter>
           {/* Standard white arrowhead */}
           <marker id="ah" markerUnits="userSpaceOnUse"

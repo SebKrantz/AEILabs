@@ -16,7 +16,7 @@ export default function Technology() {
         }}
       >
         {/* Dark overlay to keep content legible */}
-        <div className="absolute inset-0" style={{ background: "rgba(8,12,28,0.72)" }} />
+        <div className="absolute inset-0" style={{ background: "rgba(8,12,28,0.87)" }} />
       </div>
 
       <div className="relative min-h-screen" style={{ zIndex: 1 }}>
