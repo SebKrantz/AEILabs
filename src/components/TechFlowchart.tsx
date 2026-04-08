@@ -163,7 +163,7 @@ const EDGES: EdgeDef[] = [
 ];
 
 /* ─── SVG sub-components ──────────────────────────────────────── */
-const MAGENTA = "220,50,180";                         // vivid magenta – AI elements only
+const MAGENTA = "220, 50, 138";                         // vivid magenta – AI elements only
 const ARROW_STROKE = "rgba(255,255,255,0.30)";        // regular arrows: white (unchanged)
 const AI_ARROW_STROKE = `rgba(${MAGENTA},0.65)`;
 const FF = "Inter, system-ui, sans-serif";
@@ -327,6 +327,9 @@ function renderBullet(text: string): React.ReactNode {
 }
 
 function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) {
+  const isAI = node.id === "ai";
+  const magentaAccent = `rgba(${MAGENTA}, 0.85)`;
+  const magentaDot    = `rgba(${MAGENTA}, 0.70)`;
   return (
     <motion.div
       initial={{ opacity: 0, x: 50 }}
@@ -339,7 +342,10 @@ function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) 
       style={{ background: "rgba(74,127,212,0.10)" }}
     >
       <div className="flex items-center justify-between mb-5">
-        <span className="text-[10px] font-body font-semibold tracking-widest uppercase text-primary">
+        <span
+          className="text-[10px] font-body font-semibold tracking-widest uppercase text-primary"
+          style={isAI ? { color: magentaAccent } : {}}
+        >
           {node.category}
         </span>
         <button
@@ -348,7 +354,9 @@ function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) 
         >×</button>
       </div>
 
-      <h3 className="font-display text-sm font-semibold text-white leading-snug mb-4">
+      <h3
+        className="font-display text-sm font-semibold text-white leading-snug mb-4"
+      >
         {node.line1}{node.line2 ? ` ${node.line2}` : ""}
       </h3>
 
@@ -360,7 +368,10 @@ function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) 
       <ul className="space-y-3">
         {node.bullets.map((b, i) => (
           <li key={i} className="flex items-start gap-3 text-xs text-white/50">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/70 flex-shrink-0 mt-1" />
+            <span
+              className="w-1.5 h-1.5 rounded-full bg-primary/70 flex-shrink-0 mt-1"
+              style={isAI ? { backgroundColor: magentaDot } : {}}
+            />
             <span>{renderBullet(b)}</span>
           </li>
         ))}
