@@ -57,7 +57,7 @@ export default function Technology() {
         </motion.section>
 
         <footer className="pb-8 text-center">
-          <p className="text-[11px] text-white/20 font-body tracking-wide">
+          <p className="text-[11px] text-white/40 font-body tracking-wide">
             © 2026 Advanced Economic Intelligence Labs. All rights reserved.
           </p>
         </footer>
