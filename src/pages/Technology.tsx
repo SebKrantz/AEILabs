@@ -40,9 +40,9 @@ export default function Technology() {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto font-body leading-relaxed"
           >
-            A fully integrated spatial economic intelligence stack — linking global
+            A fully integrated global economic intelligence stack — linking global
             trade and transport network models to national CGE and quantitative
-            regional models, extended by hyper-local population embeddings.
+            regional models, extended by hyper-local population embeddings — with AI at its core.
           </motion.p>
         </section>
 
@@ -51,7 +51,7 @@ export default function Technology() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.9 }}
-          className="px-6 pb-24 max-w-5xl mx-auto"
+          className="px-6 pb-24 max-w-6xl mx-auto"
         >
           <TechFlowchart />
         </motion.section>
