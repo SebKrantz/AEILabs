@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -23,6 +23,16 @@ function edgePt(cx: number, cy: number, tx: number, ty: number): [number, number
   const sx = Math.abs(dx) > 0.01 ? (HW + EDGE_BUFFER) / Math.abs(dx) : 1e9;
   const sy = Math.abs(dy) > 0.01 ? (HH + EDGE_BUFFER) / Math.abs(dy) : 1e9;
   const t = Math.min(sx, sy);
+  return [cx + dx * t, cy + dy * t];
+}
+
+/** Intersection of a ray from (cx,cy) toward (tx,ty) with an ellipse of
+ *  radii (HW+EDGE_BUFFER, HH+EDGE_BUFFER) — used for the AI oval node. */
+function edgePtEllipse(cx: number, cy: number, tx: number, ty: number): [number, number] {
+  const dx = tx - cx, dy = ty - cy;
+  const rx = HW + EDGE_BUFFER, ry = HH + EDGE_BUFFER;
+  // Parametric: t such that (dx·t/rx)²+(dy·t/ry)²=1
+  const t = 1 / Math.sqrt((dx / rx) ** 2 + (dy / ry) ** 2);
   return [cx + dx * t, cy + dy * t];
 }
 
@@ -92,6 +102,20 @@ const NODES: NodeDef[] = [
     note: "These models follow the quantitative spatial economics tradition of Redding & Rossi-Hansberg (2017). Workers sort across regions trading off wages against local amenities and commuting costs, while firms locate where productivity and market access are highest. The model produces sub-national distributions of wages, population density, land rents, and welfare — the key layer for assessing distributional impacts of macro-level shocks.",
   },
   {
+    id: "ai", svgX: 500, svgY: 340,
+    category: "Agentic AI",
+    line1: "Planning, Parameterization,",
+    line2: "Simulation, and Reporting",
+    detail: "Four types of specialized agents orchestrate the complete model stack — from a natural language request to a final compiled report.",
+    bullets: [
+      "<b>Planning Agent</b>: reads the user request, maps it to relevant models and their linkages, asks clarifying follow-up questions, then outputs a structured execution plan and calls the parameterization agents",
+      "<b>Parameterization Agents</b>: model-specific agents with deep knowledge of each model's capabilities and parameters; translate the applicable portion of the plan into concrete model configurations",
+      "<b>Simulation Agents</b>: take the model-specific plan from the relevant parameterization agent, execute the simulation, collect results to temporary files, and autonomously debug or adjust parameters if something goes wrong",
+      "<b>Reporting Agents (two-layer)</b>: first layer collects and validates simulation outputs, parsing results into a tidy form; second layer synthesizes a final report, delegating to sub-agents for data analysis and plotting, then calls Word or LaTeX compilers",
+    ],
+    note: "By default the system runs in fully-agentic mode — the planning agent decides which models are needed and the remaining agents execute end-to-end without user intervention. An expert mode is also available, allowing advanced users to inspect and adjust key model parameters and internal agent prompts before triggering a simulation.",
+  },
+  {
     id: "aether", svgX: 500, svgY: 720,
     category: "Super-Resolution",
     line1: "AETHER Vector Embeddings",
@@ -107,9 +131,16 @@ interface EdgeDef {
   labelFwd: string[];
   labelBck: string[]; // empty → one-way arrow
   labelGap?: number;  // per-edge override for label distance
+  aiArrow?: boolean;  // AI-control edge: dashed blue, no label
 }
 
 const EDGES: EdgeDef[] = [
+  // AI control arrows — rendered first (behind model edges and nodes)
+  { id: "ai-qtm",       from: "ai", to: "qtm",       labelFwd: [], labelBck: [], aiArrow: true },
+  { id: "ai-cge",       from: "ai", to: "cge",       labelFwd: [], labelBck: [], aiArrow: true },
+  { id: "ai-transport", from: "ai", to: "transport", labelFwd: [], labelBck: [], aiArrow: true },
+  { id: "ai-regional",  from: "ai", to: "regional",  labelFwd: [], labelBck: [], aiArrow: true },
+  // Model-to-model bidirectional edges
   { id: "qtm-cge",            from: "qtm",      to: "cge",
     labelFwd: ["Trade Flows /", "Policy Changes"],
     labelBck: ["Sectoral Shocks /", "National Policies"] },
@@ -133,6 +164,7 @@ const EDGES: EdgeDef[] = [
 
 /* ─── SVG sub-components ──────────────────────────────────────── */
 const ARROW_STROKE = "rgba(255,255,255,0.30)";
+const AI_ARROW_STROKE = "rgba(74,127,212,0.65)";
 const FF = "Inter, system-ui, sans-serif";
 
 const LBL_LINE_H = 13; // line height between tspan lines
@@ -160,6 +192,16 @@ function EdgeLine({ edge, nodeMap }: { edge: EdgeDef; nodeMap: Map<string, NodeD
   const tn = nodeMap.get(edge.to)!;
   const [ex1, ey1] = edgePt(fn.svgX, fn.svgY, tn.svgX, tn.svgY);
   const [ex2, ey2] = edgePt(tn.svgX, tn.svgY, fn.svgX, fn.svgY);
+
+  // AI control arrows: start from ellipse boundary, end at model box boundary
+  if (edge.aiArrow) {
+    const [ax1, ay1] = edgePtEllipse(fn.svgX, fn.svgY, tn.svgX, tn.svgY);
+    return (
+      <line x1={ax1} y1={ay1} x2={ex2} y2={ey2}
+            stroke={AI_ARROW_STROKE} strokeWidth={1}
+            strokeDasharray="5,4" markerEnd="url(#ah-ai)" />
+    );
+  }
   // outwardPerp ensures the forward (from→to) arrow is always on the outer
   // side of the diamond and the back arrow on the inner side — symmetric layout.
   const [px, py] = outwardPerp(ex1, ey1, ex2, ey2);
@@ -205,7 +247,43 @@ function EdgeLine({ edge, nodeMap }: { edge: EdgeDef; nodeMap: Map<string, NodeD
   );
 }
 
+function AINodeBox({ node, isActive, onClick }: { node: NodeDef; isActive: boolean; onClick: () => void }) {
+  const { svgX: cx, svgY: cy } = node;
+  return (
+    <g onClick={onClick} style={{ cursor: "pointer" }}>
+      {/* Invisible oval hit area */}
+      <ellipse cx={cx} cy={cy} rx={HW} ry={HH} fill="transparent" />
+      {/* Symmetric glow — same geometry as crisp outline; blur spreads equally inside and out */}
+      <ellipse cx={cx} cy={cy} rx={HW} ry={HH}
+               fill="none"
+               stroke={isActive ? "rgba(65,105,225,0.85)" : "rgba(74,127,212,0.55)"}
+               strokeWidth={2}
+               filter="url(#oval-glow)" />
+      {/* Crisp oval outline on top */}
+      <ellipse cx={cx} cy={cy} rx={HW} ry={HH}
+               fill={isActive ? "rgba(65,105,225,0.12)" : "rgba(3,8,20,0.96)"}
+               stroke={isActive ? "rgba(65,105,225,1)" : "rgba(74,127,212,0.90)"}
+               strokeWidth={isActive ? 2 : 1.5} />
+      <text x={cx} y={cy - 21} textAnchor="middle" dominantBaseline="middle"
+            fontSize={9} fill="rgba(74,127,212,0.9)" fontFamily={FF} fontWeight="600" letterSpacing="1.5">
+        {node.category.toUpperCase()}
+      </text>
+      <text x={cx} y={cy - 4} textAnchor="middle" dominantBaseline="middle"
+            fontSize={12} fill="rgba(228,233,245,0.95)" fontFamily={FF} fontWeight="500">
+        {node.line1}
+      </text>
+      {node.line2 && (
+        <text x={cx} y={cy + 13} textAnchor="middle" dominantBaseline="middle"
+              fontSize={12} fill="rgba(228,233,245,0.95)" fontFamily={FF} fontWeight="500">
+          {node.line2}
+        </text>
+      )}
+    </g>
+  );
+}
+
 function NodeBox({ node, isActive, onClick }: { node: NodeDef; isActive: boolean; onClick: () => void }) {
+  if (node.id === "ai") return <AINodeBox node={node} isActive={isActive} onClick={onClick} />;
   const { svgX: cx, svgY: cy } = node;
   return (
     <g onClick={onClick} style={{ cursor: "pointer" }}>
@@ -234,6 +312,17 @@ function NodeBox({ node, isActive, onClick }: { node: NodeDef; isActive: boolean
       )}
     </g>
   );
+}
+
+/** Renders a bullet string, turning <b>text</b> segments into primary-coloured bold spans. */
+function renderBullet(text: string): React.ReactNode {
+  const parts = text.split(/(<b>.*?<\/b>)/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^<b>(.*?)<\/b>$/);
+    return m
+      ? <span key={i} className="text-primary font-semibold">{m[1]}</span>
+      : <span key={i}>{part}</span>;
+  });
 }
 
 function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) {
@@ -268,10 +357,10 @@ function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) 
       <div className="h-px bg-white/8 my-3" />
 
       <ul className="space-y-3">
-        {node.bullets.map(b => (
-          <li key={b} className="flex items-start gap-3 text-xs text-white/50">
+        {node.bullets.map((b, i) => (
+          <li key={i} className="flex items-start gap-3 text-xs text-white/50">
             <span className="w-1.5 h-1.5 rounded-full bg-primary/70 flex-shrink-0 mt-1" />
-            {b}
+            <span>{renderBullet(b)}</span>
           </li>
         ))}
       </ul>
@@ -300,14 +389,37 @@ export default function TechFlowchart() {
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
+          {/* Standard white arrowhead */}
           <marker id="ah" markerUnits="userSpaceOnUse"
                   markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
             <path d="M0,0 L10,4 L0,8 z" fill="white" />
           </marker>
+          {/* Blue arrowhead for AI control edges */}
+          <marker id="ah-ai" markerUnits="userSpaceOnUse"
+                  markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+            <path d="M0,0 L10,4 L0,8 z" fill="rgba(74,127,212,0.9)" />
+          </marker>
+          {/* Oval border glow — blurs the stroke into a soft blue halo */}
+          <filter id="oval-glow" x="-25%" y="-60%" width="150%" height="220%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
-        {EDGES.map(e => <EdgeLine key={e.id} edge={e} nodeMap={nodeMap} />)}
-        {NODES.map(n => (
+        {/* AI control edges first — sit behind model edges and nodes */}
+        {EDGES.filter(e => e.aiArrow).map(e => <EdgeLine key={e.id} edge={e} nodeMap={nodeMap} />)}
+        {/* Model-to-model edges */}
+        {EDGES.filter(e => !e.aiArrow).map(e => <EdgeLine key={e.id} edge={e} nodeMap={nodeMap} />)}
+        {/* Non-AI nodes */}
+        {NODES.filter(n => n.id !== "ai").map(n => (
+          <NodeBox key={n.id} node={n} isActive={selected === n.id}
+                   onClick={() => setSelected(p => p === n.id ? null : n.id)} />
+        ))}
+        {/* AI node rendered last — sits on top of arrows */}
+        {NODES.filter(n => n.id === "ai").map(n => (
           <NodeBox key={n.id} node={n} isActive={selected === n.id}
                    onClick={() => setSelected(p => p === n.id ? null : n.id)} />
         ))}
