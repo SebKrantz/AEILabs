@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import TechFlowchart from "@/components/TechFlowchart";
-import StarCanvas from "@/components/StarCanvas";
+import NetworkCanvas from "@/components/NetworkCanvas";
+// import StarCanvas from "@/components/StarCanvas"; // temporarily replaced by NetworkCanvas
 
 export default function Technology() {
   return (
     <>
-      {/* Star background — fixed behind all content, same feel as the globe hero */}
-      <StarCanvas />
+      {/* Network background — procedural maritime-style web, fades toward centre */}
+      <NetworkCanvas />
+      {/* <StarCanvas /> */}
 
       <div className="relative min-h-screen" style={{ zIndex: 1 }}>
         <Navbar />
