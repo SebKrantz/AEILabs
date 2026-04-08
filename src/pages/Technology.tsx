@@ -11,7 +11,7 @@ export default function Technology() {
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/wallpaper-earth.jpg')",
+          backgroundImage: `url('${import.meta.env.BASE_URL}wallpaper-earth.jpg')`,
           zIndex: 0,
         }}
       >

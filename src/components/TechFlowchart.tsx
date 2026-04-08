@@ -176,7 +176,7 @@ function ArrowLabel({ x, y, lines }: { x: number; y: number; lines: string[] }) 
   const isSingle = lines.length === 1;
   return (
     <text textAnchor="middle" fontSize={8.5} fontFamily={FF}
-          fill="rgba(148,163,184,0.9)">
+          fill="rgba(148,163,184,0.9)" filter="url(#lbl-shadow)">
       {isSingle
         ? <tspan dominantBaseline="middle" x={x} y={y}>{lines[0]}</tspan>
         : <>
@@ -401,6 +401,10 @@ export default function TechFlowchart() {
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
+          {/* Subtle dark drop-shadow for arrow labels — improves legibility over imagery */}
+          <filter id="lbl-shadow" x="-20%" y="-40%" width="140%" height="180%">
+            <feDropShadow dx="0" dy="0" stdDeviation="2.5" floodColor="rgba(0,0,0,0.85)" />
+          </filter>
           {/* Standard white arrowhead */}
           <marker id="ah" markerUnits="userSpaceOnUse"
                   markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
