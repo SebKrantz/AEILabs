@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ─── constants ───────────────────────────────────────────────── */
-// Primary blue — matches CSS var --primary: hsl(220 65% 52%) → rgb(53,106,212)
-const PRIMARY = "53, 106, 212";
+// Primary blue — matches CSS var --primary: hsl(220 65% 55%) → rgb(74,127,212)
+const PRIMARY = "74, 127, 212";
 const VBW = 1000;
 const VBH = 790;
 const HW = 108;         // box half-width in SVG units

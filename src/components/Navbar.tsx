@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0" onClick={() => setOpen(false)}>
-            <span className="text-primary font-display font-bold leading-none" style={{ fontSize: "2.8rem" }}>Æ</span>
+            <span className="font-display font-bold leading-none" style={{ fontSize: "2.8rem", color: "hsl(220 65% 46%)" }}>Æ</span>
             <div className="flex items-center gap-2">
               <div className="leading-tight">
                 <div className="text-[10px] font-display font-semibold text-foreground">Advanced</div>
