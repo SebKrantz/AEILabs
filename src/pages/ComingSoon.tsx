@@ -49,7 +49,7 @@ export default function ComingSoon({ title }: ComingSoonProps) {
         {/* Footer */}
         <footer className="pb-8 text-center">
           <p className="text-[11px] text-white/40 font-body tracking-wide">
-            © 2026 Advanced Economic Intelligence
+            © 2026 Advanced Economic Intelligence Labs
           </p>
         </footer>
       </div>

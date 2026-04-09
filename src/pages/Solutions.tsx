@@ -145,7 +145,7 @@ export default function Solutions() {
           className="text-muted-foreground text-lg max-w-2xl mx-auto font-body leading-relaxed"
         >
           Five integrated intelligence solutions — each addressing a distinct
-          dimension of global economic analysis, all powered by the same
+          dimension of global economic analysis — all powered by the same
           unified model stack.
         </motion.p>
       </section>
@@ -241,7 +241,7 @@ export default function Solutions() {
       {/* ── Footer ───────────────────────────────────────────── */}
       <footer className="pb-8 pt-4 text-center border-t border-white/5">
         <p className="text-[11px] text-white/40 font-body tracking-wide">
-          © 2026 Advanced Economic Intelligence
+          © 2026 Advanced Economic Intelligence Labs
         </p>
       </footer>
     </div>
