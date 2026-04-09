@@ -32,8 +32,8 @@ export default function ComingSoon({ title }: ComingSoonProps) {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="font-display font-light text-5xl md:text-6xl leading-tight mb-6 text-glow"
           >
-            <span className="text-foreground">Coming</span>{" "}
-            <span className="text-primary">Soon</span>
+            <span className="text-foreground">AEI</span>{" "}
+            <span className="text-primary">Labs</span>
           </motion.h1>
 
           <motion.p
@@ -49,7 +49,7 @@ export default function ComingSoon({ title }: ComingSoonProps) {
         {/* Footer */}
         <footer className="pb-8 text-center">
           <p className="text-[11px] text-white/40 font-body tracking-wide">
-            © 2026 Advanced Economic Intelligence
+            © Advanced Economic Intelligence 2026
           </p>
         </footer>
       </div>
