@@ -21,7 +21,7 @@ const SOLUTIONS: Solution[] = [
     category: "Trade & Supply Chains",
     title: "Global Trade and Supply Chain Intelligence",
     description:
-      "Understand the full ripple effects of trade policy shifts — from Trump Tariffs to MERCOSUR and AfCFTA — and infrastructure disruptions such as Middle East shipping route closures. Our integrated model stack traces shocks through global production networks to their impacts on national and regional welfare, productivity, output, prices, and macroeconomic balances, giving policymakers and businesses a decisive analytical edge.",
+      "Understand the full ripple effects of trade policy shifts — from Trump Tariffs to MERCOSUR and AfCFTA — and infrastructure disruptions such as Middle East shipping route closures. Our integrated model stack traces shocks through global and national production networks to their impacts on national and regional welfare, productivity, output, prices, and macroeconomic balances, giving policymakers and businesses a decisive analytical edge.",
     bullets: [
       "Simulate welfare and output impacts of bilateral or multilateral tariff changes at sectoral and national level",
       "Model infrastructure disruptions — port closures, shipping route shifts — and their cascading effects across supply chains",
@@ -35,7 +35,7 @@ const SOLUTIONS: Solution[] = [
     category: "Infrastructure",
     title: "Global Infrastructure Intelligence",
     description:
-      "Evaluate the economic returns to major infrastructure investments — ports, transport corridors, energy grids, digital networks — at regional and global scales. Simulate how connectivity improvements reshape international trade flows, sectoral productivity, welfare distribution, and advanced indicators including food security and inter-regional inequality. Compare alternative project designs through rigorous counterfactual scenario analysis.",
+      "Evaluate the economic returns to major infrastructure investments — ports, roads, railways, transport corridors, and intermodal connectivity — at regional and global scales. Simulate how connectivity improvements reshape international trade flows, sectoral productivity, welfare distribution, and advanced indicators including food security and inter-regional inequality. Compare alternative project designs through rigorous counterfactual scenario analysis.",
     bullets: [
       "Quantify the trade and productivity gains from proposed infrastructure corridors and connectivity projects",
       "Compare alternative project locations and specifications through counterfactual investment simulation",
@@ -49,7 +49,7 @@ const SOLUTIONS: Solution[] = [
     category: "Hyper-Local Analytics",
     title: "Hyper-Local Price Changes and Welfare Impacts",
     description:
-      "Our regional models and AETHER hyper-local extrapolation layer translate global economic dynamics into granular forecasts of price changes and welfare impacts — down to sub-municipal resolution. Map market-relevant intelligence at spatial scales previously unavailable to policymakers and investors, combining global macro consistency with unprecedented local precision.",
+      "Our regional models and AETHER hyper-local extrapolation layer translate global economic dynamics into granular forecasts of price changes and welfare impacts — down to 10m resolution. Map market-relevant intelligence at spatial scales previously unavailable to policymakers and investors, combining global macro consistency with unprecedented local precision.",
     bullets: [
       "Translate global supply chain shocks into neighbourhood-level price and welfare impact maps",
       "Identify vulnerable communities and economic hotspots with precision spatial targeting",

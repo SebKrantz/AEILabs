@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ─── constants ───────────────────────────────────────────────── */
+// Primary blue — matches CSS var --primary: hsl(220 65% 55%) → rgb(74,127,212)
+const PRIMARY = "74, 127, 212";
 const VBW = 1000;
 const VBH = 790;
 const HW = 108;         // box half-width in SVG units
@@ -293,12 +295,12 @@ function NodeBox({ node, isActive, onClick }: { node: NodeDef; isActive: boolean
       {/* box — rx=0 → sharp corners */}
       <rect
         x={cx - HW} y={cy - HH} width={HW * 2} height={HH * 2} rx={0}
-        fill={isActive ? "rgba(74,127,212,0.10)" : "rgba(3,8,20,0.7)"}
+        fill={isActive ? `rgba(${PRIMARY},0.10)` : "rgba(3,8,20,0.78)"}
         stroke={isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.65)"}
         strokeWidth={isActive ? 1.5 : 1}
       />
       <text x={cx} y={cy - 16} textAnchor="middle" dominantBaseline="middle"
-            fontSize={9} fill="rgba(74,127,212,0.9)" fontFamily={FF} fontWeight="600" letterSpacing="1.5">
+            fontSize={9} fill={`rgba(${PRIMARY},0.9)`} fontFamily={FF} fontWeight="600" letterSpacing="1.5">
         {node.category.toUpperCase()}
       </text>
       <text x={cx} y={cy + 2} textAnchor="middle" dominantBaseline="middle"
@@ -339,7 +341,7 @@ function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) 
       /* Fixed to viewport, below navbar (top-16 = 64px), sharp corners.
          Matches active node: same primary-blue fill at 10% opacity + blur. */
       className="fixed right-0 top-16 bottom-0 w-80 p-6 z-40 overflow-y-auto flex flex-col backdrop-blur-md"
-      style={{ background: "rgba(74,127,212,0.10)" }}
+      style={{ background: `rgba(${PRIMARY},0.10)` }}
     >
       <div className="flex items-center justify-between mb-5">
         <span
