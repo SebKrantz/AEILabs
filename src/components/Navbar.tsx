@@ -31,7 +31,7 @@ export default function Navbar() {
                 <div className="text-[10px] font-display font-semibold text-foreground">Economic</div>
                 <div className="text-[10px] font-display font-semibold text-foreground">Intelligence</div>
               </div>
-              <span className="text-3xl font-display font-light text-foreground">Labs</span>
+              <span className="text-3xl font-display font-thin text-foreground">Labs</span>
             </div>
           </Link>
 
