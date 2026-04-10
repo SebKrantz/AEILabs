@@ -201,7 +201,7 @@ export default function Solutions() {
               >
                 <h2
                   className="font-display font-light text-3xl md:text-5xl leading-tight"
-                  style={{ color: "rgb(231, 235, 239)", textShadow: "0 2px 16px rgba(0,0,0,0.75)" }}
+                  style={{ color: "rgba(231, 235, 239, 0.9)", textShadow: "0 2px 16px rgba(0,0,0,0.75)" }}
                 >
                   {sol.title}
                 </h2>
