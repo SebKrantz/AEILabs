@@ -241,7 +241,7 @@ export default function Solutions() {
       {/* ── Footer ───────────────────────────────────────────── */}
       <footer className="pb-8 pt-4 text-center border-t border-white/5">
         <p className="text-[11px] text-white/40 font-body tracking-wide">
-          © 2026 Advanced Economic Intelligence Labs
+          © 2026 Advanced Economic Intelligence
         </p>
       </footer>
     </div>
