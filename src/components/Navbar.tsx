@@ -24,6 +24,11 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0" onClick={() => setOpen(false)}>
+          {/* Old Logo (Single colour, no bar) 
+          <div className="w-10 h-10 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center">
+            <span className="text-primary font-display font-bold text-2xl">Æ</span>
+          </div>
+          */}
             <svg viewBox="0 0 48 37.9" height="36.5" style={{ display: "block", overflow: "visible" }}>
               <text y="36" fontFamily="Inter, system-ui, sans-serif" fontWeight="800"
                     fontSize="46" fill="hsl(220, 65%, 46%)">Æ</text>
