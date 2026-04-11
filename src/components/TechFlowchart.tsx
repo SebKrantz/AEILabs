@@ -101,7 +101,7 @@ const NODES: NodeDef[] = [
     line2: "(Mobile Labor, ADM1/2 Regions)",
     detail: "Quantitative spatial equilibrium models with mobile labor at ADM1/ADM2 resolution. Endogenous population sorting driven by wages, amenities, and connectivity — linking national macro shocks to sub-national distributional outcomes.",
     bullets: ["Mobile labor across regions", "Wage and amenity-driven population sorting", "Receives productivity & connectivity shocks", "Exports local welfare to AETHER layer"],
-    note: "These models follow the quantitative spatial economics tradition of Redding & Rossi-Hansberg (2017). Workers sort across regions trading off wages against local amenities and commuting costs, while firms locate where productivity and market access are highest. The model produces sub-national distributions of wages, population density, land rents, and welfare — the key layer for assessing distributional impacts of macro-level shocks.",
+    note: "These models follow the quantitative spatial economics tradition of Redding & Rossi-Hansberg (2017) and Allen & Arkolakis (2025). Workers sort across regions trading off wages against local amenities and commuting costs, while firms locate where productivity and market access are highest. The model produces sub-national distributions of wages, population density, land rents, and welfare — the key layer for assessing distributional impacts of macro-level shocks.",
   },
   {
     id: "ai", svgX: 500, svgY: 340,
