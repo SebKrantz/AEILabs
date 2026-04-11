@@ -124,7 +124,7 @@ const NODES: NodeDef[] = [
     line2: "(10m Resolution, POI-Enriched)",
     detail: "AETHER (AlphaEarth-POI Enriched Representation Learning for Human-Centered Urban Analysis): 10m-resolution vector embeddings encoding the built environment, demographics, and economic activity for hyper-local welfare extrapolation.",
     bullets: ["10m spatial resolution", "Encodes POIs, built form & socio-demographics", "Hyper-local welfare & price extrapolation", "Can localize sectoral production for CGE/QRM linkages"],
-    note: "Embeddings are trained via contrastive representation learning on multi-source geospatial data: satellite imagery, points of interest, road networks, and census indicators. The resulting feature vectors capture fine-grained variation in the built environment that top-down models cannot resolve. Beyond welfare extrapolation, they can localize sectoral production estimates from the CGE and regional layers, enabling deeper integration across the full model stack.",
+    note: "AETHER is a lightweight framework that aligns AlphaEarth Foundation (AE) 10m embeddings derived from multi-source Earth Observation (EO) data with Points of Interest (POIs) and population data for human-centered urban analysis – inspired by Liu et al. (2026) (arXiv:2510.09894). Embeddings are trained via contrastive representation learning. The resulting feature vectors capture fine-grained variation in the built environment and economic activity. Beyond welfare extrapolation, they can localize sectoral production estimates from the CGE and regional layers, enabling deeper integration across the full model stack.",
   },
 ];
 
