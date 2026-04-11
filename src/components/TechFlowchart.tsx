@@ -72,8 +72,8 @@ const NODES: NodeDef[] = [
     category: "Global Trade",
     line1: "New Quantitative Trade Model",
     line2: "(I-O Linkages, ~60 Sectors)",
-    detail: "A new-generation Quantitative Trade Model with multi-sector input-output linkages covering the full global economy. Calibrated to GTAP/WIOD data, it resolves bilateral trade flows at the sector level and propagates policy shocks through international supply chains.",
-    bullets: ["Gravity-based bilateral trade flows", "Multi-sector input-output linkages", "Policy shock simulation (tariffs, NTBs)", "Feeds national CGE via trade policy signals"],
+    detail: "A new-generation Quantitative Trade Model with multi-sector input-output linkages covering the full global economy. Calibrated to GTAP/OECD/WIOD data, it resolves bilateral trade flows at the sector level and propagates policy shocks through international supply chains.",
+    bullets: ["Gravity-based bilateral trade flows", "Multi-sector input-output linkages", "Policy shock simulation (tariffs, NTBs)", "Feeds national CGE via trade policy signals", "Feeds trade flows to transport model"],
     note: "QTMs follow the structural gravity tradition of Eaton & Kortum (2002) and Caliendo & Parro (2015), combining CES preferences, iceberg trade costs, and Ricardian comparative advantage. The input-output extension allows tariff shocks to propagate upstream and downstream across sectors, capturing global value chain effects that single-sector models miss.",
   },
   {
@@ -91,8 +91,8 @@ const NODES: NodeDef[] = [
     line1: "Global Multimodal Transport",
     line2: "(5 Modes, ~4,000 Centroids)",
     detail: "A global multimodal transport model covering five modes: road, rail, inland waterway, maritime, and air. Resolves trade flows onto ~4,000 spatial centroids worldwide, mapping observed and counterfactual freight flows along the physical network.",
-    bullets: ["5 modes: road, rail, IWT, shipping, air", "~4,000 global OD centroids", "Assigns trade flows to least-cost network paths", "Passes connectivity changes to the regional model"],
-    note: "Trade flows are assigned to the network using generalised transport costs — combining distance, travel time, and mode-specific tariffs — via least-cost path algorithms. New infrastructure enters as reductions in link costs or capacity expansions, shifting flows and lowering trade costs between connected regions. These connectivity changes are then passed to the regional model as changes in market access.",
+    bullets: ["5 modes: road, rail, IWT, shipping, air", "~4,000 global OD centroids", "Stochastic assignment of trade flows to network paths (Path-Sized Logit Model)", "Passes connectivity changes to the regional model"],
+    note: "Trade flows are assigned to the network using generalised transport costs — combining distance, travel time, and mode-specific tariffs — via the Path-Sized Logit Model, a stochastic assignment method. New infrastructure enters as reductions in link costs or capacity expansions, shifting flows and lowering trade costs between connected regions. These connectivity changes are then passed to the regional model as changes in market access.",
   },
   {
     id: "regional", svgX: 500, svgY: 560,
