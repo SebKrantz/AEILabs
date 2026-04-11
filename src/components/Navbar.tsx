@@ -24,7 +24,12 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0" onClick={() => setOpen(false)}>
-            <span className="font-display font-bold leading-none" style={{ fontSize: "2.8rem", color: "hsl(220 65% 46%)" }}>Æ</span>
+            <svg viewBox="0 0 48 37.9" height="36.5" style={{ display: "block", overflow: "visible" }}>
+              <text y="36" fontFamily="Inter, system-ui, sans-serif" fontWeight="800"
+                    fontSize="46" fill="hsl(220, 65%, 46%)">Æ</text>
+              {/* Bar covers the connecting stroke; x shifted left to fully hide it */}
+              <rect x="22.5" y="2.5" width="6.6" height="33.3" fill="#dd9b2a" />
+            </svg>
             <div className="flex items-center gap-2">
               <div className="leading-tight">
                 <div className="text-[10px] font-display font-semibold text-foreground">Advanced</div>
