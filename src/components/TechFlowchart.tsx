@@ -79,8 +79,8 @@ const NODES: NodeDef[] = [
   {
     id: "cge", svgX: 175, svgY: 340,
     category: "National Models",
-    line1: "National Models", 
-    line2: "(Multi-Sector Production)",
+    line1: "National CGE Models",
+    line2: "(SAM-based, Multi-Sector)",
     detail: "Country-level Computable General Equilibrium models built on Social Accounting Matrices. Simultaneously clears goods, factor, and institutional accounts — capturing domestic production, household income, government flows, and the external balance.",
     bullets: ["SAM-based: activities, commodities, factors, institutions", "Fixed exchange rate closure", "Links to trade model via export/import shocks", "Calibrated for 50+ countries"],
     note: "The Social Accounting Matrix provides the circular-flow accounting structure linking firms, households, government, and the rest of the world. A fixed exchange rate closure is standard for pegged-currency economies, with foreign savings adjusting to clear the external account. Factor market closures determine whether capital and labor are mobile across sectors between periods.",
