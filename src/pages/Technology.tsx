@@ -68,7 +68,7 @@ export default function Technology() {
 
         <footer className="pb-8 text-center">
           <p className="text-[11px] text-white/40 font-body tracking-wide">
-            © 2026 Advanced Economic Intelligence Labs. All rights reserved.
+            © 2026 Advanced Economic Intelligence
           </p>
         </footer>
       </div>

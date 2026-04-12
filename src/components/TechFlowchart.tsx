@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ─── constants ───────────────────────────────────────────────── */
+// Primary blue — matches CSS var --primary: hsl(220 65% 53%) → rgb(62,116,212)
+const PRIMARY = "62, 116, 212";
 const VBW = 1000;
 const VBH = 790;
 const HW = 108;         // box half-width in SVG units
@@ -70,8 +72,8 @@ const NODES: NodeDef[] = [
     category: "Global Trade",
     line1: "New Quantitative Trade Model",
     line2: "(I-O Linkages, ~60 Sectors)",
-    detail: "A new-generation Quantitative Trade Model with multi-sector input-output linkages covering the full global economy. Calibrated to GTAP/WIOD data, it resolves bilateral trade flows at the sector level and propagates policy shocks through international supply chains.",
-    bullets: ["Gravity-based bilateral trade flows", "Multi-sector input-output linkages", "Policy shock simulation (tariffs, NTBs)", "Feeds national CGE via trade policy signals"],
+    detail: "A new-generation Quantitative Trade Model with multi-sector input-output linkages covering the full global economy. Calibrated to GTAP/OECD/WIOD data, it resolves bilateral trade flows at the sector level and propagates policy shocks through international supply chains.",
+    bullets: ["Gravity-based bilateral trade flows", "Multi-sector input-output linkages", "Policy shock simulation (tariffs, NTBs)", "Feeds national CGE via trade policy signals", "Feeds trade flows to transport model"],
     note: "QTMs follow the structural gravity tradition of Eaton & Kortum (2002) and Caliendo & Parro (2015), combining CES preferences, iceberg trade costs, and Ricardian comparative advantage. The input-output extension allows tariff shocks to propagate upstream and downstream across sectors, capturing global value chain effects that single-sector models miss.",
   },
   {
@@ -89,8 +91,8 @@ const NODES: NodeDef[] = [
     line1: "Global Multimodal Transport",
     line2: "(5 Modes, ~4,000 Centroids)",
     detail: "A global multimodal transport model covering five modes: road, rail, inland waterway, maritime, and air. Resolves trade flows onto ~4,000 spatial centroids worldwide, mapping observed and counterfactual freight flows along the physical network.",
-    bullets: ["5 modes: road, rail, IWT, shipping, air", "~4,000 global OD centroids", "Assigns trade flows to least-cost network paths", "Passes connectivity changes to the regional model"],
-    note: "Trade flows are assigned to the network using generalised transport costs — combining distance, travel time, and mode-specific tariffs — via least-cost path algorithms. New infrastructure enters as reductions in link costs or capacity expansions, shifting flows and lowering trade costs between connected regions. These connectivity changes are then passed to the regional model as changes in market access.",
+    bullets: ["5 modes: road, rail, IWT, shipping, air", "~4,000 global OD centroids", "Stochastic assignment of trade flows to network paths (Path-Sized Logit Model)", "Passes connectivity changes to the regional model"],
+    note: "Trade flows are assigned to the network using generalised transport costs — combining distance, travel time, and mode-specific tariffs — via the Path-Sized Logit Model, a stochastic assignment method. New infrastructure enters as reductions in link costs or capacity expansions, shifting flows and lowering trade costs between connected regions. These connectivity changes are then passed to the regional model as changes in market access.",
   },
   {
     id: "regional", svgX: 500, svgY: 560,
@@ -99,7 +101,7 @@ const NODES: NodeDef[] = [
     line2: "(Mobile Labor, ADM1/2 Regions)",
     detail: "Quantitative spatial equilibrium models with mobile labor at ADM1/ADM2 resolution. Endogenous population sorting driven by wages, amenities, and connectivity — linking national macro shocks to sub-national distributional outcomes.",
     bullets: ["Mobile labor across regions", "Wage and amenity-driven population sorting", "Receives productivity & connectivity shocks", "Exports local welfare to AETHER layer"],
-    note: "These models follow the quantitative spatial economics tradition of Redding & Rossi-Hansberg (2017). Workers sort across regions trading off wages against local amenities and commuting costs, while firms locate where productivity and market access are highest. The model produces sub-national distributions of wages, population density, land rents, and welfare — the key layer for assessing distributional impacts of macro-level shocks.",
+    note: "These models follow the quantitative spatial economics tradition of Redding & Rossi-Hansberg (2017) and Allen & Arkolakis (2025). Workers sort across regions trading off wages against local amenities and commuting costs, while firms locate where productivity and market access are highest. The model produces sub-national distributions of wages, population density, land rents, and welfare — the key layer for assessing distributional impacts of macro-level shocks.",
   },
   {
     id: "ai", svgX: 500, svgY: 340,
@@ -122,7 +124,7 @@ const NODES: NodeDef[] = [
     line2: "(10m Resolution, POI-Enriched)",
     detail: "AETHER (AlphaEarth-POI Enriched Representation Learning for Human-Centered Urban Analysis): 10m-resolution vector embeddings encoding the built environment, demographics, and economic activity for hyper-local welfare extrapolation.",
     bullets: ["10m spatial resolution", "Encodes POIs, built form & socio-demographics", "Hyper-local welfare & price extrapolation", "Can localize sectoral production for CGE/QRM linkages"],
-    note: "Embeddings are trained via contrastive representation learning on multi-source geospatial data: satellite imagery, points of interest, road networks, and census indicators. The resulting feature vectors capture fine-grained variation in the built environment that top-down models cannot resolve. Beyond welfare extrapolation, they can localize sectoral production estimates from the CGE and regional layers, enabling deeper integration across the full model stack.",
+    note: "AETHER is a lightweight framework that aligns AlphaEarth Foundation (AE) 10m embeddings derived from multi-source Earth Observation (EO) data with Points of Interest (POIs) and population data for human-centered urban analysis – inspired by Liu et al. (2026) (arXiv:2510.09894). Embeddings are trained via contrastive representation learning. The resulting feature vectors capture fine-grained variation in the built environment and economic activity. Beyond welfare extrapolation, they can localize sectoral production estimates from the CGE and regional layers, enabling deeper integration across the full model stack.",
   },
 ];
 
@@ -293,12 +295,12 @@ function NodeBox({ node, isActive, onClick }: { node: NodeDef; isActive: boolean
       {/* box — rx=0 → sharp corners */}
       <rect
         x={cx - HW} y={cy - HH} width={HW * 2} height={HH * 2} rx={0}
-        fill={isActive ? "rgba(74,127,212,0.10)" : "rgba(3,8,20,0.7)"}
+        fill={isActive ? `rgba(${PRIMARY},0.10)` : "rgba(3,8,20,0.78)"}
         stroke={isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.65)"}
         strokeWidth={isActive ? 1.5 : 1}
       />
       <text x={cx} y={cy - 16} textAnchor="middle" dominantBaseline="middle"
-            fontSize={9} fill="rgba(74,127,212,0.9)" fontFamily={FF} fontWeight="600" letterSpacing="1.5">
+            fontSize={9} fill={`rgba(${PRIMARY},0.9)`} fontFamily={FF} fontWeight="600" letterSpacing="1.5">
         {node.category.toUpperCase()}
       </text>
       <text x={cx} y={cy + 2} textAnchor="middle" dominantBaseline="middle"
@@ -339,7 +341,7 @@ function DetailPanel({ node, onClose }: { node: NodeDef; onClose: () => void }) 
       /* Fixed to viewport, below navbar (top-16 = 64px), sharp corners.
          Matches active node: same primary-blue fill at 10% opacity + blur. */
       className="fixed right-0 top-16 bottom-0 w-80 p-6 z-40 overflow-y-auto flex flex-col backdrop-blur-md"
-      style={{ background: "rgba(74,127,212,0.10)" }}
+      style={{ background: `rgba(${PRIMARY},0.10)` }}
     >
       <div className="flex items-center justify-between mb-5">
         <span

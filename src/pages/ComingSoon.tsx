@@ -32,8 +32,8 @@ export default function ComingSoon({ title }: ComingSoonProps) {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="font-display font-light text-5xl md:text-6xl leading-tight mb-6 text-glow"
           >
-            <span className="text-foreground">Coming</span>{" "}
-            <span className="text-primary">Soon</span>
+            <span className="text-foreground">AEI</span>{" "}
+            <span className="text-primary">Labs</span>
           </motion.h1>
 
           <motion.p
@@ -42,14 +42,14 @@ export default function ComingSoon({ title }: ComingSoonProps) {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="text-muted-foreground text-lg max-w-md mx-auto font-body leading-relaxed"
           >
-            This section is under construction. Check back soon.
+            This section is under construction.
           </motion.p>
         </div>
 
         {/* Footer */}
         <footer className="pb-8 text-center">
           <p className="text-[11px] text-white/40 font-body tracking-wide">
-            © 2026 Advanced Economic Intelligence Labs. All rights reserved.
+            © 2026 Advanced Economic Intelligence
           </p>
         </footer>
       </div>
