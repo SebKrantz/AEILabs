@@ -71,9 +71,12 @@ export default function Navbar() {
           </div>
 
           {/* Desktop: CTA */}
-          <button className="hidden md:block px-4 py-2 text-sm font-body font-medium rounded-md bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors duration-200">
+          <a
+            href="mailto:contact@aeilabs.xyz"
+            className="hidden md:block px-4 py-2 text-sm font-body font-medium rounded-md bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors duration-200"
+          >
             Get in Touch
-          </button>
+          </a>
 
           {/* Mobile: hamburger button */}
           <button
@@ -131,9 +134,12 @@ export default function Navbar() {
                 );
               })}
               <div className="mt-2 pt-3 border-t border-border/40">
-                <button className="w-full px-4 py-2.5 text-sm font-body font-medium rounded-md bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors duration-200">
+                <a
+                  href="mailto:contact@aeilabs.xyz"
+                  className="block px-4 py-2.5 text-sm font-body font-medium rounded-md bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors duration-200 text-center"
+                >
                   Get in Touch
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>
