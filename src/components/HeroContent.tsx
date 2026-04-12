@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function HeroContent() {
   return (
@@ -45,18 +46,19 @@ export default function HeroContent() {
            — trace shocks from global to local, plan infrastructure at any scale, simulate the impact of economic policies, and shape economic geography — using AI chat or expert interfaces.
         </motion.p>
 
+        {/* CTA buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.1 }}
           className="flex items-center justify-center gap-4 pointer-events-auto"
         >
-          <button className="px-8 py-3 font-display font-medium text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200 shadow-lg shadow-primary/20">
-            Explore Platform
-          </button>
-          <button className="px-8 py-3 font-display font-medium text-sm rounded-lg border border-border text-foreground hover:border-primary/40 hover:text-primary transition-colors duration-200">
+          <Link to="/solutions" className="px-8 py-3 font-display font-medium text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200 shadow-lg shadow-primary/20">
+            Our Solutions {/* Explore Platform */}
+          </Link>
+          <Link to="/technology" className="px-8 py-3 font-display font-medium text-sm rounded-lg border border-border text-foreground hover:border-primary/40 hover:text-primary transition-colors duration-200">
             Learn More
-          </button>
+          </Link>
         </motion.div>
       </div>
 
