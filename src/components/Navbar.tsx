@@ -132,7 +132,7 @@ export default function Navbar() {
               })}
               <div className="mt-2 pt-3 border-t border-border/40">
                 <button className="w-full px-4 py-2.5 text-sm font-body font-medium rounded-md bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors duration-200">
-                  Request Demo
+                  Get in Touch
                 </button>
               </div>
             </div>
