@@ -1,87 +1,110 @@
-# Reenvision — Interactive Globe Platform
+# AEI Labs — Advanced Economic Intelligence
 
-An interactive 3D globe visualization built with React and Three.js, featuring realistic continent outlines rendered from Natural Earth GeoJSON data. The hero landing page invites users to *"Reenvision How Places Connect."*
+Public website for **AEI Labs** (Advanced Economic Intelligence), a startup building **global spatial economic intelligence**: linking global trade and transport network models to national computable general equilibrium (CGE) and quantitative regional models, with hyper-local extrapolation and AI-assisted interfaces. The hero experience is an interactive 3D globe; inner pages present platform solutions, architecture, and a placeholder company section.
+
+Contact: [contact@aeilabs.xyz](mailto:contact@aeilabs.xyz). The production site is intended for the [aeilabs.xyz](https://aeilabs.xyz) domain (see `vite.config.ts`).
 
 ![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Vite](https://img.shields.io/badge/Vite-5-purple) ![Three.js](https://img.shields.io/badge/Three.js-r160-black)
- 
-## Tech Stack
+
+## What’s on the site
+
+| Route | Content |
+|-------|---------|
+| `/` | Landing page: 3D globe (countries, ports, cities, maritime routes, trade arcs), hero copy on reenvisioning economic planning, CTAs to Solutions and Technology |
+| `/solutions` | Five solution areas: trade and supply chains, infrastructure, hyper-local analytics (AETHER), industrial policy, regional development |
+| `/technology` | Narrative and interactive flowchart of the integrated model stack (global trade model, CGE, regional models, transport, AETHER, AI) |
+| `/company` | “Under construction” placeholder with animated network background |
+
+## Tech stack
 
 | Layer | Technology |
-|-------|-----------|
+|-------|------------|
 | **Framework** | React 18 + TypeScript 5 |
-| **Build Tool** | Vite 5 (SWC) |
-| **3D Rendering** | Three.js, React Three Fiber, Drei |
+| **Build** | Vite 5 (SWC) |
+| **3D** | Three.js, React Three Fiber, Drei |
 | **Styling** | Tailwind CSS 3, shadcn/ui (Radix primitives) |
 | **Animation** | Framer Motion |
 | **Routing** | React Router v6 |
-| **State/Data** | TanStack React Query |
-| **Testing** | Vitest, Testing Library, Playwright |
+| **Data fetching** | TanStack React Query (e.g. GeoJSON for the globe) |
+| **Testing** | Vitest, Testing Library; Playwright available as a dev dependency |
 | **Linting** | ESLint 9, TypeScript ESLint |
+
+GeoJSON served from `public/geodata/` is produced by a Node script (see below). Solution imagery and wallpapers live under `public/`.
 
 ## Prerequisites
 
 - **Node.js** ≥ 18
-- **npm**, **bun**, or **pnpm** (the project includes a bun lockfile)
+- **npm**, **bun**, or **pnpm** (the repo includes Bun lockfiles)
 
-## Getting Started
+## Getting started
 
 ```bash
-# Clone the repository
 git clone <your-repo-url>
-cd <project-directory>
+cd AEILabs
 
-# Install dependencies
 npm install
-# or
-bun install
+# or: bun install
 
-# Start the development server
 npm run dev
-# or
-bun dev
+# or: bun dev
 ```
 
-The app will be available at **http://localhost:8080**.
+`predev` and `prebuild` run **`convert-geodata`**, which can refresh `public/geodata/*.geojson` from optional sources under `map_data/` (gitignored). If those sources are absent, the script skips conversion and the committed GeoJSON in `public/geodata/` is used.
 
-## Available Scripts
+The dev server listens on **http://localhost:8080** by default (`PORT` overrides the port).
+
+## Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start dev server with HMR |
-| `npm run build` | Production build |
-| `npm run build:dev` | Development build |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint |
-| `npm run test` | Run unit tests (Vitest) |
-| `npm run test:watch` | Run tests in watch mode |
+| `npm run dev` | Converts geodata if applicable, then starts Vite with HMR |
+| `npm run build` | Converts geodata if applicable, then production build |
+| `npm run build:dev` | Development-mode build |
+| `npm run preview` | Serve the production build locally |
+| `npm run lint` | ESLint |
+| `npm run test` | Vitest (single run) |
+| `npm run test:watch` | Vitest watch mode |
+| `npm run convert-geodata` | Run `scripts/convert-geodata.mjs` only |
 
-## Project Structure
+## Project structure
 
 ```
+scripts/
+  convert-geodata.mjs    # Shapefile/GPKG → public/geodata (optional map_data/)
+public/
+  geodata/               # Countries, ports, cities, maritime routes (GeoJSON)
+  …                      # Images referenced by Solutions / Technology pages
 src/
-├── components/
-│   ├── Globe.tsx          # 3D globe with continent outlines
-│   ├── HeroContent.tsx    # Hero section text and CTA
-│   ├── Navbar.tsx         # Navigation bar
-│   ├── NavLink.tsx        # Navigation link component
-│   └── ui/                # shadcn/ui components (Radix-based)
-├── data/
-│   └── continents.ts      # GeoJSON-derived continent coordinates
-├── hooks/                 # Custom React hooks
-├── pages/
-│   ├── Index.tsx          # Landing page
-│   └── NotFound.tsx       # 404 page
-├── lib/
-│   └── utils.ts           # Utility functions (cn, etc.)
-├── index.css              # Global styles, CSS variables, fonts
-├── App.tsx                # App root with routing
-└── main.tsx               # Entry point
+  components/
+    Globe.tsx            # 3D globe, routes, labels
+    HeroContent.tsx      # Landing hero and CTAs
+    Navbar.tsx           # Nav + contact mailto
+    TechFlowchart.tsx    # Technology page architecture diagram
+    NetworkCanvas.tsx    # Company placeholder background
+    ui/                  # shadcn/ui
+  data/
+    continents.ts        # Continent outlines for the globe
+  hooks/
+    useGeoData.ts        # Fetches GeoJSON bundles via React Query
+  pages/
+    Index.tsx
+    Solutions.tsx
+    Technology.tsx
+    ComingSoon.tsx       # Used for /company
+    NotFound.tsx
+  utils/
+    generateGlobeTexture.ts
+  types/
+    geo.ts
+  index.css              # Design tokens, fonts
+  App.tsx                # Routes
+  main.tsx
 ```
 
-## Design System
+## Design system
 
-The project uses a custom design system built on Tailwind CSS with HSL-based CSS custom properties defined in `src/index.css`. The primary palette is a refined "kings blue" (`#4A7FD4`) with a dark background theme. Typography uses **Inter** via Google Fonts.
+Tailwind with HSL CSS variables in `src/index.css`. Primary accent aligns with the globe and UI (kings blue family, e.g. `#4A7FD4`). Typography uses **Inter** and display headings via the configured font stack.
 
-## License
+## Static hosting and SPA routes
 
-MIT
+`index.html` includes a small script to restore client-side routes when the host serves `404.html` for unknown paths (typical GitHub Pages–style setups). `vite.config.ts` sets `base: '/'` for deployment at the site root.
